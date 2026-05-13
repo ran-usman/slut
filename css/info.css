@@ -1,0 +1,136 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lato:wght@400;700&display=swap');
+
+body {
+    margin: 0;
+    background: #f5f1ea;
+    font-family: 'Lato', sans-serif;
+     text-decoration: wavy;
+    font-style: italic;
+}
+
+
+header {
+    background: #3E2723;
+    color: #F5F5DC;
+    text-align: center;
+    padding: 14px;
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 3px;
+}
+
+nav {
+    background: #2D1B18;
+    padding: 8px 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+nav a {
+    background: transparent;
+    color: #F5F5DC;
+    text-decoration: none;
+    padding: 8px 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.3s;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+nav a:hover {
+    background: #3E2723;
+    color: #D4AF37;
+    border-radius: 5px;
+}
+
+.info-page {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background: linear-gradient(135deg, #ffffff, #f7efe5);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.info-page h1 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 25px;
+    color: #3E2723;
+    letter-spacing: 2px;
+    font-family: 'Playfair Display', serif;
+}
+
+.info-page h2 {
+    margin-top: 30px;
+    color: #5D4037;
+    border-left: 5px solid #D4AF37;
+    padding-left: 10px;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+}
+
+.info-page p {
+    line-height: 1.8;
+    font-size: 16px;
+    color: #333;
+    font-family: 'Lato', sans-serif;
+}
+
+.info-page ul {
+    margin-top: 10px;
+    padding-left: 20px;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    color: #333;
+}
+
+.info-page li {
+    margin-bottom: 8px;
+    line-height: 1.8;
+}
+
+.info-page:hover {
+    transform: scale(1.01);
+    transition: 0.3s;
+}
+
+footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background-color: #2D1B18;
+    color: #F5F5DC;
+    padding: 40px 20px;
+    margin-top: 50px;
+    border-top: 3px solid #D4AF37;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 600px) {
+    .info-page {
+        margin: 20px 15px;
+        padding: 20px;
+    }
+
+    .info-page h1 {
+        font-size: 26px;
+    }
+
+    .info-page h2 {
+        font-size: 18px;
+    }
+
+    footer {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 20px;
+        padding: 30px 15px;
+    }
+}

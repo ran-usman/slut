@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart - Chocolate Store</title>
+    <link rel="stylesheet" href="../css/cart.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../images/site.webmanifest">
+</head>
+<body>
+
+<header>
+    <h1 id="store">store</h1>
+    <a href="cart.html" id="icon">
+        <span class="material-symbols-outlined">shopping_cart</span>
+        <span id="cartcount">0</span>
+    </a>
+</header>
+
+<nav>
+    <a href="../index.html"><span class="material-symbols-outlined">home</span></a>
+    <a href="info.html"><span class="material-symbols-outlined">info</span></a>
+    <a href="contect.html"><span class="material-symbols-outlined">contact_support</span></a>
+</nav>
+
+<a href="../index.html" class="back-link">← Back to Store</a>
+
+<div class="cart-page">
+    <h1>🛒 Your Cart</h1>
+    <div id="cart-contents"></div>
+</div>
+
+<footer>
+    <section>
+        <p>Handcrafting premium chocolate with ethically sourced cocoa. From bean to bar, we bring the richest flavors straight to your doorstep</p>
+    </section>
+    <section><p style="text-align: center">&copy; Rana 2026</p></section>
+    <section>
+        <p>Questions? We are here to help. Reach out to us for bulk orders, gifting, or just to talk chocolate. Your sweetness is our priority</p>
+    </section>
+</footer>
+
+<script>
+    const PRICE = 30;
+
+    const productImages = {
+        'KitKat':   '../images/kitkat.jpg',
+        'snickers': '../images/snicker.jpg',
+        'mars':     '../images/marss.jpg'
+    };
+
+    function getCart() {
+        return JSON.parse(localStorage.getItem('chocolateCart') || '[]');
+    }
+
+    function saveCart(cart) {
+        localStorage.setItem('chocolateCart', JSON.stringify(cart));
+    }
+
+    function getCartCounts(cart) {
+        const counts = {};
+        cart.forEach(item => {
+            counts[item] = (counts[item] || 0) + 1;
+        });
+        return counts;
+    }
+
+    function renderCart() {
+        const cart = getCart();
+        const counts = getCartCounts(cart);
+        const container = document.getElementById('cart-contents');
+
+        document.getElementById('cartcount').innerText = cart.length;
+
+        if (cart.length === 0) {
+            container.innerHTML = `
+                <div class="cart-empty">
+                    <span>🍫</span>
+                    Your cart is empty. <a href="../index.html">Go pick some chocolates!</a>
+                </div>`;
+            return;
+        }
+
+        let html = '';
+        let grandTotal = 0;
+
+        Object.entries(counts).forEach(([product, qty]) => {
+            const itemTotal = qty * PRICE;
+            grandTotal += itemTotal;
+            const img = productImages[product] || '';
+            html += `
+            <div class="cart-item">
+                <div class="cart-item-left">
+                    <img src="${img}" alt="${product}">
+                    <div>
+                        <div class="cart-item-name">${product}</div>
+                        <div class="cart-item-price">${PRICE} kr each</div>
+                    </div>
+                </div>
+                <div class="cart-item-right">
+                    <div class="qty-controls">
+                        <button class="qty-btn" onclick="changeQty('${product}', -1)">−</button>
+                        <span class="qty-num">${qty}</span>
+                        <button class="qty-btn" onclick="changeQty('${product}', 1)">+</button>
+                    </div>
+                    <div class="item-total">${itemTotal} kr</div>
+                    <button class="remove-btn" onclick="removeProduct('${product}')" title="Remove">
+                        <span class="material-symbols-outlined">delete</span>
+                    </button>
+                </div>
+            </div>`;
+        });
+
+        html += `
+        <div class="cart-summary">
+            <span class="cart-total-label">Total</span>
+            <span class="cart-total-amount">${grandTotal} kr</span>
+        </div>
+        <button class="checkout-btn" onclick="checkout()">Proceed to Checkout ✓</button>
+        <button class="clear-btn" onclick="clearCart()">Clear Cart</button>`;
+
+        container.innerHTML = html;
+    }
+
+    function changeQty(product, delta) {
+        let cart = getCart();
+        if (delta === 1) {
+            cart.push(product);
+        } else {
+            const idx = cart.lastIndexOf(product);
+            if (idx !== -1) cart.splice(idx, 1);
+        }
+        saveCart(cart);
+        renderCart();
+    }
+
+    function removeProduct(product) {
+        let cart = getCart().filter(item => item !== product);
+        saveCart(cart);
+        renderCart();
+    }
+
+    function clearCart() {
+        if (confirm('Clear the entire cart?')) {
+            saveCart([]);
+            renderCart();
+        }
+    }
+
+    function checkout() {
+        alert('Thank you for your order! 🍫');
+        saveCart([]);
+        renderCart();
+    }
+
+    renderCart();
+</script>
+
+</body>
+</html>

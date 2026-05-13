@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chocolate Store</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="images/site.webmanifest">
+</head>
+
+<body>
+
+    <header>
+        <h1 id="store">store</h1>
+
+        <a href="html/cart.html" id="icon">
+            <span class="material-symbols-outlined">shopping_cart</span>
+            <span id="cartcount">0</span>
+            <span id="message"></span>
+        </a>
+
+        <form onsubmit="searchProduct(event)">
+            <div class="search">
+                <span class="material-symbols-outlined">search</span>
+                <input id="searchInput" class="search-input" type="search" placeholder="search">
+            </div>
+        </form>
+    </header>
+
+    <nav>
+        <a href="index.html"><span class="material-symbols-outlined">home</span></a>
+        <a href="html/info.html"><span class="material-symbols-outlined">info</span></a>
+        <a href="html/contect.html"><span class="material-symbols-outlined">contact_support</span></a>
+    </nav>
+
+    <main>
+        <div id="kitkat-border">
+            <a href="html/kitkat.html">
+                <section id="kitkat"></section>
+                <p>Have a break? Grab a KitKat. Enjoy the iconic crunch of chocolate-covered wafers.</p>
+            </a>
+            <div class="buy-section">
+                <h3>30kr</h3>
+                <button onclick="addToCart('KitKat')">buy</button>
+            </div>
+        </div>
+
+        <div id="snickers-border">
+            <a href="html/snickers.html">
+                <section id="snickers"></section>
+                <p>You're not you when you're hungry. Satisfy your cravings with a Snickers.</p>
+            </a>
+            <div class="buy-section">
+                <h3>30kr</h3>
+                <button onclick="addToCart('snickers')">buy</button>
+            </div>
+        </div>
+
+        <div id="mars-border">
+            <a href="html/mars.html">
+                <section id="mars"></section>
+                <p>Work, rest, and play. The legendary taste of Mars is just a click away.</p>
+            </a>
+            <div class="buy-section">
+                <h3>30kr</h3>
+                <button onclick="addToCart('mars')">buy</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <section>
+            <p>Handcrafting premium chocolate with ethically sourced cocoa. From bean to bar, we bring the richest flavors straight to your doorstep</p>
+        </section>
+        <section>
+            <p style="text-align: center">&copy; Rana 2026</p>
+        </section>
+        <section>
+            <p>Questions? We are here to help. Reach out to us for bulk orders, gifting, or just to talk chocolate. Your sweetness is our priority</p>
+        </section>
+    </footer>
+
+    <script>
+        function searchProduct(event) {
+            event.preventDefault();
+            let input = document.getElementById("searchInput").value.toLowerCase().trim();
+            let products = {
+                "kitkat":   "html/kitkat.html",
+                "snickers": "html/snickers.html",
+                "mars":     "html/mars.html"
+            };
+            if (products[input]) {
+                window.location.href = products[input];
+            } else {
+                alert("Product not found");
+            }
+        }
+    </script>
+
+    <script>
+        function getCart() {
+            return JSON.parse(localStorage.getItem('chocolateCart') || '[]');
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem('chocolateCart', JSON.stringify(cart));
+        }
+
+        function updateCartDisplay() {
+            const cart = getCart();
+            document.getElementById("cartcount").innerText = cart.length;
+        }
+
+        function addToCart(product) {
+            const cart = getCart();
+            cart.push(product);
+            saveCart(cart);
+            updateCartDisplay();
+            document.getElementById("message").innerText = product + " added to cart!";
+            setTimeout(() => {
+                document.getElementById("message").innerText = "";
+            }, 2000);
+        }
+
+        updateCartDisplay();
+    </script>
+
+</body>
+</html>

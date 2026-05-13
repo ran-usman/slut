@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KitKat - Chocolate Store</title>
+    <link rel="stylesheet" href="../css/kitkat.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="../images/site.webmanifest">
+</head>
+<body>
+
+<header>
+    <h1 id="store">store</h1>
+    <a href="cart.html" id="icon">
+        <span class="material-symbols-outlined">shopping_cart</span>
+        <span id="cartcount">0</span>
+        <span id="message"></span>
+    </a>
+</header>
+
+<nav>
+    <a href="../index.html"><span class="material-symbols-outlined">home</span></a>
+    <a href="info.html"><span class="material-symbols-outlined">info</span></a>
+    <a href="contect.html"><span class="material-symbols-outlined">contact_support</span></a>
+</nav>
+
+<a href="../index.html" class="back-link">← Back to Store</a>
+
+<div class="product-page">
+    <img class="product-image" src="../images/kitkat.jpg" alt="KitKat chocolate bar">
+    <div class="product-info">
+        <h1>KitKat 🍫</h1>
+        <div class="price">30 kr</div>
+        <p>
+            Have a break, have a KitKat! The iconic chocolate-covered wafer bar that has been delighting chocolate lovers for decades.
+            Crispy layers of light wafer wrapped in smooth milk chocolate — perfect for any moment that calls for a little indulgence.
+        </p>
+        <ul>
+            <li>Crispy wafer layers</li>
+            <li>Smooth milk chocolate coating</li>
+            <li>42g per bar</li>
+            <li>Perfect snack or gift</li>
+        </ul>
+        <button onclick="addToCart('KitKat')">buy</button>
+    </div>
+</div>
+
+<footer>
+    <section>
+        <p>Handcrafting premium chocolate with ethically sourced cocoa. From bean to bar, we bring the richest flavors straight to your doorstep</p>
+    </section>
+    <section><p style="text-align: center">&copy; Rana 2026</p></section>
+    <section>
+        <p>Questions? We are here to help. Reach out to us for bulk orders, gifting, or just to talk chocolate. Your sweetness is our priority</p>
+    </section>
+</footer>
+
+<script>
+    function getCart() {
+        return JSON.parse(localStorage.getItem('chocolateCart') || '[]');
+    }
+
+    function saveCart(cart) {
+        localStorage.setItem('chocolateCart', JSON.stringify(cart));
+    }
+
+    function updateCartDisplay() {
+        const cart = getCart();
+        document.getElementById("cartcount").innerText = cart.length;
+    }
+
+    function addToCart(product) {
+        const cart = getCart();
+        cart.push(product);
+        saveCart(cart);
+        updateCartDisplay();
+        document.getElementById("message").innerText = product + " added to cart!";
+        setTimeout(() => {
+            document.getElementById("message").innerText = "";
+        }, 2000);
+    }
+
+    updateCartDisplay();
+</script>
+
+</body>
+</html>
